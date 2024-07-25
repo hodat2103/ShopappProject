@@ -1,0 +1,62 @@
+.container-fluid{
+    background-color: white;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.header{
+    background-color: #54a5fc !important;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+}
+
+h6{ 
+    margin-top: 10px;
+    margin-left: 50%;
+    color: rgb(251, 255, 0);
+}
+
+#sidebar{
+    background-color: #007bff !important;
+    color: white;
+    overflow-y: auto;
+    height: calc(100% - 60px); /* Adjust this value to match the height of your header */
+    top: 60px; /* Adjust this value to match the height of your header */
+    position: fixed;
+}
+
+#sidebar a{
+    color: white;
+    border-top: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 15px;
+}
+
+#sidebar ul li:hover{
+    width: auto;
+    background-color: #333;
+    border-radius: 10px;
+}
+
+.nav-link{
+    cursor: pointer;
+}
+
+.icon{
+    padding: 5px;
+}
+
+.fixed-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
+.content-area {
+    margin-top: 60px; /* Adjust this value to match the height of your header */
+    margin-left: 16.666667%; /* Adjust this value to match the width of your sidebar */
+    padding: 15px;
+}

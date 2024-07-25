@@ -1,0 +1,27 @@
+@import '../../styles/shared-styles.scss';
+.container {
+    width: 100%;
+    background-color: #b3b3b3;
+    height: auto;
+}
+
+.intro-section {
+    text-align: center;
+    color: #555;
+    padding: 20px;
+}
+.product-header{
+    color: brown;
+}
+
+.product-order{
+    color: var(--shopapp-color) ;
+}
+
+
+.row{
+    padding-top: 30px;
+}
+.product-header{
+    text-align: center;
+}

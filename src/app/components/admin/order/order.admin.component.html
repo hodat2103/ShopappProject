@@ -1,0 +1,83 @@
+
+    <div class="col-md-12 col-lg-12 content-area">
+      <h1 class="fixed-table-title">Orders Admin Page</h1>
+      <div class="fixed-search-bar">
+        <div class="row mb-3">
+          <div class="col-md-8">
+            <input type="text" 
+              class="form-control search-input" placeholder="Tìm đơn hàng" 
+              [(ngModel)]="keyword">
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" (click)="searchOrders()">Search</button>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="table fixed-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>User ID</th>
+              <th>Full Name</th>
+              <th>Email</th>
+              <th>Phone Number</th>
+              <th>Address</th>
+              <th>Note</th>
+              <th>Order Date</th>
+              <th>Status</th>
+              <th>Total Money</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of orders; trackBy: trackById">
+              <td>{{ order.id }}</td>
+              <td>{{ order.user_id }}</td>
+              <td>{{ order.fullname }}</td>
+              <td>{{ order.email }}</td>
+              <td>{{ order.phone_number }}</td>
+              <td>{{ order.address }}</td>
+              <td>{{ order.note }}</td>
+              <td>{{ order.order_date | date }}</td>
+              <td>{{ order.status }}</td>
+              <td>{{ order.total_money }}</td>
+              <td>
+                <div style="display: flex; gap: 10px;">
+                  <button 
+                    (click)="viewDetails(order)"
+                    class="btn btn-primary">
+                    View Details
+                  </button>
+                  <button class="btn btn-danger" 
+                    (click)="deleteOrder(order.id)">
+                    Delete
+                  </button>                
+                </div>
+              </td>                        
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="d-flex justify-content-center">
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <li class="page-item" *ngIf="currentPage > 1">
+              <a class="page-link" (click)="onPageChange(1)">First</a>
+            </li>
+            <li class="page-item" *ngIf="currentPage > 1">
+              <a class="page-link" (click)="onPageChange(currentPage - 1)">Previous</a>
+            </li>
+            <li class="page-item" *ngFor="let page of visiblePages">
+              <a class="page-link" (click)="onPageChange(page)">{{ page }}</a>
+            </li>
+            <li class="page-item" *ngIf="currentPage < totalPages">
+              <a class="page-link" (click)="onPageChange(currentPage + 1)">Next</a>
+            </li>
+            <li class="page-item" *ngIf="currentPage < totalPages">
+              <a class="page-link" (click)="onPageChange(totalPages)">Last</a>
+            </li>                
+          </ul>
+        </nav>
+      </div>
+    </div>

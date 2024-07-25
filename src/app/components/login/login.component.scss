@@ -1,0 +1,94 @@
+@import '../../styles/shared-styles.scss';
+.container {
+    background-color: #b3b3b3;
+    height: auto;
+}
+.login-form{
+    background-color: $shopapp-color ;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 500px;
+    height: auto;
+    border: 4px solid #ffffff;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    margin-top: 50px;
+    margin-bottom: 30px;
+}
+.login-header{
+    text-align: center;
+    /* color: white; */
+    margin-bottom: 20px;
+}
+.form-control{
+    background-color: $shopapp-color ;
+    /* border: 1px solid #555; */
+    font-size: 15px;
+}
+.divider-nospace{
+    border-top: 1px solid white;
+}
+.password-field{
+    position: relative;
+}
+.password-toggle{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(10%);
+    color: white;
+    cursor: pointer;
+}
+.checkbox-text{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+.register-link:hover{
+    color: #000;
+}
+.checkbox-text input[type="check-box"]:checked{
+    border-color: rgb(0, 0, 0);
+}
+.form-check-input{
+    margin-right: 5px;
+}
+.register-link{
+    color: #ffffff;
+
+}
+.access-right{
+    margin: 20px;
+    width: 200px;
+    color: white;
+    border: 1px solid #ffffff;
+}
+.access-right:focus{
+    border: 1px solid #ffffff;
+
+}
+.form-control::placeholder{
+
+    opacity: 1;
+    color: #ffffff;
+}
+.form-control:-ms-input-placeholder{
+    color: #b3b3b3;
+}
+
+.login-button{
+    font-size: 17px;
+    color: $shopapp-color ;
+    border-radius: 30px;
+    width: 100%;
+    font-weight: bold;
+    margin-top: 20px;
+    padding: 10px 0px;
+    border: none;
+    margin-bottom: 15px;
+}
+.login-button:hover{
+    background-color: #cfcece;
+}

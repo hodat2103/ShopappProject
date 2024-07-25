@@ -1,0 +1,47 @@
+.table-container-wrapper {
+  position: relative;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.table-container {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  min-width: 1000px;
+}
+
+.table thead th {
+  text-align: center;
+  white-space: nowrap;
+  background-color: rgb(90, 221, 130);
+}
+
+.header-row, .title-component {
+  background-color: #f0f8ff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.table td {
+  white-space: nowrap;
+}
+
+.scrollbar-container {
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #fff;
+  z-index: 10;
+}
+
+.scrollbar-inner {
+  width: 1000px; /* Match this width to your table's min-width */
+  height: 1px;
+}

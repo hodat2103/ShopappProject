@@ -1,0 +1,48 @@
+<app-header></app-header>
+<div class="container">
+  <form #loginForm="ngForm">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="login-form mx-auto">
+          <h2 class="login-header">Đăng nhập</h2>
+          <div class="form-group">
+            <label for="phoneNumber">Điện thoại</label>
+            <input type="text" class="form-control" [(ngModel)]="phoneNumber" name="phoneNumber"
+                   (input)="onPhoneNumberChange()" (focus)="loginForm.form.markAsTouched()" id="phone-number">
+            <div class="divider-nospace"></div>
+          </div>
+          <div class="mt-5"></div>
+          <div class="form-group password-field">
+            <label for="password">Mật khẩu</label>
+            <input type="password" placeholder="ít nhất 6 ký tự" class="form-control" [(ngModel)]="password"
+                   name="password" id="password">
+            <i class="password-toggle fas fa-eye-slash"></i>
+            <div class="divider-nospace"></div>
+          </div>
+          <div class="form-group">
+            <div class="form-check checkbox-text">
+              <span style="display: flex;">
+                <input type="checkbox" class="form-check-input" id="remember" [(ngModel)]="rememberMe" name="remember">
+                <label class="form-check-label text-start" for="remember">Nhớ đăng nhập</label>
+              </span>
+              <a href="" class="register-link">Quên mật khẩu</a>
+            </div>
+          </div>
+          <div class="form-group">
+            <select class="form-control access-right" [(ngModel)]="selectedRole" name="role">
+              <option selected disabled>Quyền truy cập</option>
+              <option *ngFor="let role of roles" [ngValue]="role">
+                {{ role.name }}
+              </option>
+            </select>
+            <button type="button" (click)="login()" class="login-button">Đăng nhập</button>
+            <p class="text-center">Bạn chưa đăng ký ?
+              <span><a href="" class="register-link"  (click)="register()">Đăng ký tại khoản</a></span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<app-footer></app-footer>

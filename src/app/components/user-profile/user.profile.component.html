@@ -1,0 +1,74 @@
+<app-header></app-header>
+<div class="container">
+<form [formGroup]="userProfileForm">
+    <div class="row">
+        <div class="col-md-4 mx-auto ">
+            <h3 class="product-header">Thông tin người nhận</h3>
+            <div class="mb-3">
+                <label for="fullname" class="form-label">Họ và tên</label>
+                <input type="text" formControlName="fullname" class="form-control" id="fullname"
+                    [class.is-invalid]="userProfileForm.get('fullname')!.invalid && userProfileForm.get('fullname')!.touched">
+                <!-- <div *ngIf="userProfileForm.get('fullname')!.invalid && userProfileForm.get('fullname')!.touched"
+                    class="invalid-feedback">
+                    Họ và tên là trường bắt buộc
+                </div> -->
+            </div>
+            <!-- <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" formControlName="email" class="form-control" id="email"
+                    [class.is-invalid]="userProfileForm.get('email')!.invalid && userProfileForm.get('email')!.touched">
+               <div *ngIf="userProfileForm.get('email')!.invalid && userProfileForm.get('email')!.touched"
+                    class="invalid-feedback">
+                    Email không hợp lệ
+                </div> -->
+            <!-- </div> -->
+            <!-- <div class="mb-3">
+                <label for="phone_number" class="form-label">Số điện thoại</label>
+                <input type="text" formControlName="phone_number" class="form-control" id="phone_number"
+                    [class.is-invalid]="userProfileForm.get('phone_number')!.invalid && userProfileForm.get('phone_number')!.touched">
+                <div *ngIf="userProfileForm.get('phone_number')!.invalid && userProfileForm.get('phone_number')!.touched"
+                    class="invalid-feedback">
+                    SĐT là trường bắt buộc và có ít nhất 6 ký tự
+                </div>
+            </div> -->
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" formControlName="password" class="form-control" id="password"
+                    [class.is-invalid]="userProfileForm.get('password')!.invalid && userProfileForm.get('password')!.touched">
+                <div *ngIf="userProfileForm.get('password')!.invalid && userProfileForm.get('password')!.touched"
+                    class="invalid-feedback">
+                    Mật khẩu là trường bắt buộc và có ít nhất 3 ký tự
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="retype_password" class="form-label">Nhập lại mật khẩu</label>
+                <input type="password" formControlName="retype_password" class="form-control" id="retype_password"
+                    [class.is-invalid]="userProfileForm.get('retype_password')!.invalid && userProfileForm.get('retype_password')!.touched">
+                <div *ngIf="userProfileForm.get('retype_password') !== userProfileForm.get('password')"
+                    class="invalid-feedback">
+                    Mật khẩu không trùng khớp !
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="date_of_birth" class="form-label">Ngày sinh</label>
+                <input type="date" formControlName="date_of_birth" class="form-control" id="date_of_birth"
+                    [class.is-invalid]="userProfileForm.get('date_of_birth')!.invalid && userProfileForm.get('date_of_birth')!.touched">
+                <!-- <div *ngIf="userProfileForm.get('date_of_birth')!.invalid && userProfileForm.get('date_of_birth')!.touched"
+                    class="invalid-feedback">
+                    Địa chỉ là trường bắt buộc và có ít nhất 3 ký tự
+                </div> -->
+            </div>
+            <div class="mb-3">
+                <label for="address" class="form-label">Địa chỉ</label>
+                <input type="text" formControlName="address" class="form-control" id="address"
+                    [class.is-invalid]="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched">
+             
+            </div>
+
+            <div class="text-start mt-3">
+                <button class="btn btn-primary" (click)="save()" type="button">Lưu cập nhật</button>
+            </div>
+        </div>
+    </div>
+</form>
+<app-footer></app-footer>
