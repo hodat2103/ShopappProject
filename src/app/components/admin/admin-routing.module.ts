@@ -11,6 +11,7 @@ import { InsertCategoryAdminComponent } from "./category/insert/insert.category.
 import { UpdateCategoryAdminComponent } from "./category/update/update.category.admin.component";
 import { InsertProductAdminComponent } from "./product/insert/insert.product.admin.component";
 import { UpdateProductAdminComponent } from "./product/update/update.product.admin.component";
+import { UserAdminComponent } from "./user/user.admin.component";
 
 const routes: Routes = [
   {
@@ -28,10 +29,6 @@ const routes: Routes = [
             {
                 path: 'categories',
                 component: CategoryAdminComponent
-            },
-            {
-                path: 'users',
-                component: ProductAdminComponent
             },
             //sub path
             {
@@ -55,10 +52,10 @@ const routes: Routes = [
                 path: 'categories/insert',
                 component: InsertCategoryAdminComponent
             },
-            // {
-            //     path: 'users',
-            //     component: UserAdminComponent
-            // },  
+            {
+                path: 'users',
+                component: UserAdminComponent
+            },  
             // {
             //     path: '**', 
             //     component: ErrorComponent

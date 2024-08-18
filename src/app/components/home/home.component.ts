@@ -44,9 +44,12 @@ export class HomeComponent implements OnInit {
   }
 
   getCategories(page: number, limit: number) {
+    debugger
     this.categoryService.getCategories(page, limit).subscribe({
-      next: (apiResponse: ApiResponse) => {
-        this.categories = apiResponse.data;
+      next: (apiResponse: any) => {
+        debugger
+        this.categories = apiResponse;
+        console.log(this.categories)
       },
       error: (error: any) => {
         console.error('Error fetching categories:', error);

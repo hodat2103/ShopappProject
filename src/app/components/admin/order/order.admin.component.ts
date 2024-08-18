@@ -4,6 +4,8 @@ import { OrderService } from '../../../services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { OrderResponse } from '../../../responses/orders/order.response';
 import { ApiResponse } from '../../../responses/api.response';
+import { ExcelService } from '../../../services/excel.service';
+import { downloadFile } from '../../../util/file';
 
 @Component({
   selector: 'app-order-admin',
@@ -21,7 +23,9 @@ export class OrderAdminComponent implements OnInit {
   visiblePages: number[] = [];
   localStorage?:Storage;
 
-  constructor(private orderService: OrderService, private router: Router,
+  constructor(private orderService: OrderService,
+    private excelService:ExcelService,
+    private router: Router,
     private route: ActivatedRoute,
       // private location: Location
   ) { 
@@ -35,8 +39,9 @@ export class OrderAdminComponent implements OnInit {
   getAllOrders(keyword: string, page: number, limit: number){
     this.orderService.getAllOrders(keyword, page, limit).subscribe({
       next: (response: any) => {
-        this.orders = response.orders;
-        this.totalPages = response.totalPages;
+        debugger
+        this.orders = response.data.orders;
+        this.totalPages = response.data.totalPages;
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
    },
       error: (error: any) => {
@@ -94,7 +99,7 @@ searchOrders() {
     this.orderService.deleteOrder(orderId).subscribe({
       next: (response: any) => {
         // Xóa đơn hàng khỏi danh sách hiện tại
-        this.orders = this.orders.filter(order => order.id !== orderId);
+        this.orders = this.orders.filter(orders => orders.id !== orderId);
         this.totalPages = Math.ceil(this.orders.length / this.itemsPerPage);
         this.visiblePages = this.generateVisiblePageArray(this.currentPage, this.totalPages);
       },
@@ -106,5 +111,12 @@ searchOrders() {
   }
   trackById(index: number, item: Order): number {
     return item.id;
+  }
+  export(dateName: string){
+    this.excelService.exportExcel('orders').subscribe((blob: Blob) => {
+      downloadFile(blob, 'orders.xlsx');
+    }, error => {
+      console.error('Error downloading the file', error);
+    });
   }
 }

@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit{
   //  phoneNumber: string = '12345678'; 
   //  password: string = '12345678'; 
 
+  //login admin
   // phoneNumber: string = '0334204369'; 
   // password: string = '123456';
   phoneNumber: string = ''; 
@@ -35,7 +36,7 @@ export class LoginComponent implements OnInit{
     private router: Router,
     private userService: UserService,
     private tokenService: TokenService,
-    private roleService: RoleService,
+    private roleService: RoleService
   ) {}
 
     ngOnInit() {
@@ -52,7 +53,7 @@ export class LoginComponent implements OnInit{
     }
 
   onPhoneNumberChange() {
-    console.log(`Phone typed: ${this.phoneNumber}`);
+    // console.log(`Phone typed: ${this.phoneNumber}`);
   }
 
   login() {
@@ -104,7 +105,11 @@ export class LoginComponent implements OnInit{
       }
     });
   }
-  register(){
-    this.router.navigate(['/register']);  
+  redirect(componentName: string){
+    if(componentName === 'register'){
+      this.router.navigate(['/register']);  
+    }else if(componentName === 'forget-password'){
+      this.router.navigate(['forget-password'])
+    }
   }
 }

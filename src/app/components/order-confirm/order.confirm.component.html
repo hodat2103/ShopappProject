@@ -68,7 +68,12 @@
           <p class="total-price">Tổng tiền: ${{ orderResponse.total_money }} </p>
         </div>
 
-       
+       <div  class="payment-confirm" *ngIf="orderResponse?.payment_method === 'vnpay'">
+          <p>Đơn hàng đã thanh toán</p>
+       </div>
+       <div  class="payment-confirm" *ngIf="orderResponse?.payment_method === 'cod'">
+        <p>Đơn hàng chưa thanh toán</p>
+     </div>
         <div class="text-start mt-3">
             <button class="btn btn-primary" (click)="backHomePage()"  type="button">Quay lại trang chủ</button>
         </div>

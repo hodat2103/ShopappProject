@@ -15,8 +15,11 @@ export class OrderService {
 
     constructor(private http: HttpClient){}
 
-    placeOrder(orderDTO: OrderDTO){
-        return this.http.post<any>(this.apiOrders, orderDTO);
+    placeOrder(orderDTO: OrderDTO): Observable<ApiResponse>{
+        return this.http.post<ApiResponse>(this.apiOrders, orderDTO);
+    }
+    getOrdersByUserId(userId: number): Observable<ApiResponse>{
+        return this.http.get<ApiResponse>(`${this.apiOrders}/user/${userId}`);
     }
     getOrderById(orderId: number): Observable<any>{
         return this.http.get<any>(`${this.apiOrders}/${orderId}`);

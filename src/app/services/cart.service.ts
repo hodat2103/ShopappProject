@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { ProductService } from "./product.service";
+import { Product } from "../models/product";
 
 @Injectable({
   providedIn: 'root',
@@ -28,11 +29,25 @@ export class CartService {
 
     this.saveCartToLocalStorage();
   }
-
+  loadCart(): void {
+    const storedCartItems = localStorage.getItem('cart');
+    if (storedCartItems) {
+      this.cart = new Map(JSON.parse(storedCartItems));
+    }
+  }
+  removeFromCart(productId: number): void {
+    if (this.cart.has(productId)) {
+      this.cart.delete(productId);
+      this.saveCartToLocalStorage();
+    }
+  }
   getCart(): Map<number, number> {
     return this.cart;
   }
-
+  setCart(cart : Map<number, number>) {
+    this.cart = cart ?? new Map<number, number>();
+    this.saveCartToLocalStorage();
+  }
   private saveCartToLocalStorage(): void {
     // Check if localStorage is available
     if (this.isLocalStorageAvailable()) {
@@ -40,7 +55,9 @@ export class CartService {
       console.log(localStorage);
     }
   }
-
+  // updateCart(cartItems: Array<{ product: Product, quantity: number }>) {
+  //   this.cart = cartItems;
+  // }
   clearCart(): void {
     this.cart.clear();
     this.saveCartToLocalStorage();

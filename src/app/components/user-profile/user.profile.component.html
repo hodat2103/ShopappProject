@@ -59,6 +59,12 @@
                 </div> -->
             </div>
             <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input type="email" formControlName="email" class="form-control" id="email"
+                    [class.is-invalid]="userProfileForm.get('email')!.invalid && userProfileForm.get('email')!.touched">
+             
+            </div>
+            <div class="mb-3">
                 <label for="address" class="form-label">Địa chỉ</label>
                 <input type="text" formControlName="address" class="form-control" id="address"
                     [class.is-invalid]="userProfileForm.get('address')!.invalid && userProfileForm.get('address')!.touched">

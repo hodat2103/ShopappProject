@@ -4,6 +4,7 @@ export interface UserResponse{
     id: number;
     fullname: string;
     phone_number: string;
+    email: string;
     address: string;
     active: boolean;
     date_of_birth: Date;

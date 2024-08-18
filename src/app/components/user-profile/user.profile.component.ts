@@ -27,6 +27,7 @@ export class UserComponent implements OnInit {
       password: ['', Validators.minLength(3)],
       retype_password: ['', Validators.minLength(3)],
       date_of_birth: [''],
+      email: ['', Validators.minLength(5)],
       address: ['', Validators.minLength(5)]
 
 
@@ -47,6 +48,7 @@ export class UserComponent implements OnInit {
         };
         this.userProfileForm.patchValue({
           fullname: this.userResponse?.fullname ?? '',
+          email: this.userResponse?.email ?? '',
           address: this.userResponse?.address ?? '',
           date_of_birth: this.userResponse?.date_of_birth.toISOString().substring(0, 10)
         });
@@ -78,6 +80,7 @@ export class UserComponent implements OnInit {
     if (this.userProfileForm.valid) {
       const updateUserDTO: UpdateUserDTO = {
         fullname: this.userProfileForm.get('fullname')?.value,
+        email: this.userProfileForm.get('email')?.value,
         address: this.userProfileForm.get('address')?.value,
         password: this.userProfileForm.get('password')?.value,
         retype_password: this.userProfileForm.get('retype_password')?.value,

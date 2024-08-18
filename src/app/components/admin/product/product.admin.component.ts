@@ -11,6 +11,8 @@ import { ApiResponse } from '../../../responses/api.response';
 import { HttpClient, HttpHeaders, HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { ExcelService } from '../../../services/excel.service';
+import { downloadFile } from '../../../util/file';
 
 
 @Component({
@@ -37,6 +39,8 @@ export class ProductAdminComponent implements OnInit {
     localStorage?:Storage;
 
     private productService = inject(ProductService);
+    private excelService = inject(ExcelService);
+
     private router = inject(Router);
     private location = inject(Location);
 
@@ -134,4 +138,11 @@ export class ProductAdminComponent implements OnInit {
         });
       }
     }   
+    export(dateName: string){
+      this.excelService.exportExcel('products').subscribe((blob: Blob) => {
+        downloadFile(blob, 'products.xlsx');
+      }, error => {
+        console.error('Error downloading the file', error);
+      });
+    }
 }

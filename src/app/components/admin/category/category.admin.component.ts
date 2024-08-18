@@ -8,6 +8,8 @@ import { ApiResponse } from '../../../responses/api.response';
 import { Category } from '../../../models/category';
 import { error } from 'console';
 import { HttpErrorResponse } from '@angular/common/http';
+import { ExcelService } from '../../../services/excel.service';
+import { downloadFile } from '../../../util/file';
 
 @Component({
   selector: 'app-category-admin',
@@ -17,7 +19,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class CategoryAdminComponent implements OnInit{
     categories: Category[]=[];
     constructor(private router: Router, 
-      private categoryService: CategoryService
+      private categoryService: CategoryService,
+      private excelService: ExcelService
+
     ){}
     ngOnInit(): void {
         this.getAllCategories(0,6);
@@ -61,5 +65,12 @@ export class CategoryAdminComponent implements OnInit{
           }          
         });  
       }      
+    }
+    export(dateName: string){
+      this.excelService.exportExcel('categories').subscribe((blob: Blob) => {
+        downloadFile(blob, 'categories.xlsx');
+      }, error => {
+        console.error('Error downloading the file', error);
+      });
     }
 }

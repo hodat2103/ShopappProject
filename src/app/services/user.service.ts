@@ -36,8 +36,8 @@ export class UserService {
     return this.http.post(this.apiLogin, loginDTO, this.apiConfig);
   }
 
-  getUserDetail(token: string) {
-    return this.http.post(this.apiUserDetail, {
+  getUserDetail(token: string): Observable<any> {
+    return this.http.post<any>(this.apiUserDetail, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
@@ -99,9 +99,9 @@ export class UserService {
     const url = `${environment.apiBaseUrl}/users`;
     return this.http.get<ApiResponse>(url, { params: params });
   }
-  resetPassword(userId: number): Observable<ApiResponse> {
-    const url = `${environment.apiBaseUrl}/users/reset-password/${userId}`;
-    return this.http.put<ApiResponse>(url, null, this.apiConfig);
+  resetPassword(email: string): Observable<ApiResponse> {
+    const url = `${environment.apiBaseUrl}/users/reset-password/${email}`;
+    return this.http.put<ApiResponse>(url, null);
   }
 
   toggleUserStatus(params: { userId: number, enable: boolean }): Observable<ApiResponse> {

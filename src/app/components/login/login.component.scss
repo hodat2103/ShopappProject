@@ -46,18 +46,19 @@
     align-items: center;
     margin-top: 10px;
 }
-.register-link:hover{
-    color: #000;
-}
+
 .checkbox-text input[type="check-box"]:checked{
     border-color: rgb(0, 0, 0);
 }
 .form-check-input{
     margin-right: 5px;
 }
-.register-link{
+.register-link, .forget-password-link{
     color: #ffffff;
 
+}
+.register-link:hover, .forget-password-link:hover{
+    color: #000;
 }
 .access-right{
     margin: 20px;

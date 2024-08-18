@@ -16,4 +16,5 @@ export interface OrderResponse{
     shipping_date: Date;
     payment_method: string;
     order_details: OrderDetailDTO[];
+    active: boolean;
 }

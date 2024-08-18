@@ -14,7 +14,7 @@ import { ApiResponse } from '../../../responses/api.response';
 })
 export class DetailOrderAdminComponent implements OnInit {
   orderId: number = 0;
-  orderResponse: OrderResponse = {
+  orderResponse: OrderResponse = {   
     id: 0,
     user_id: 0,
     fullname: '',
@@ -29,7 +29,8 @@ export class DetailOrderAdminComponent implements OnInit {
     shipping_address: '',
     shipping_date: new Date(),
     payment_method: '',
-    order_details: []
+    order_details: [],
+    active: false
   };
 
   constructor(
@@ -44,30 +45,35 @@ export class DetailOrderAdminComponent implements OnInit {
 
   getOrderDetails(): void {
     this.orderId = Number(this.route.snapshot.paramMap.get('id'));
-    console.log('id: ' + this.orderId)
+    // console.log('id: ' + this.orderId)
+    debugger
     this.orderService.getOrderById(this.orderId).subscribe({
       next: (response: any) => {
+        debugger
+        // console.log('order detail: ', response.data.order_details)
         this.orderResponse = {
-          id: response.id,
-          user_id: response.user_id,
-          fullname: response.fullname,
-          email: response.email,
-          phone_number: response.phone_number,
-          address: response.address,
-          note: response.note,
-          status: response.status,
-          total_money: response.total_money,
-          order_date: this.convertToDate(response.order_date),
-          shipping_method: response.shipping_method,
-          shipping_address: response.shipping_address,
-          payment_method: response.payment_method,
-          shipping_date: this.convertToDate(response.shipping_date),
-          order_details: response.order_details.map((order_detail: any) => {
+          id: response.data.id,
+          user_id: response.data.user_id,
+          fullname: response.data.fullname,
+          email: response.data.email,
+          phone_number: response.data.phone_number,
+          address: response.data.address,
+          note: response.data.note,
+          status: response.data.status,
+          total_money: response.data.total_money,
+          order_date: this.convertToDate(response.data.order_date),
+          shipping_method: response.data.shipping_method,
+          shipping_address: response.data.shipping_address,
+          payment_method: response.data.payment_method,
+          shipping_date: this.convertToDate(response.data.shipping_date),
+          order_details: response.data.order_details.map((order_detail: any) => {
             order_detail.product.thumbnail = `${environment.apiBaseUrl}/products/image/thumbnail/${order_detail.product.id}`;
             order_detail.number_of_products = order_detail.numberOfProducts;
             return order_detail;
-          })
+          }),
+          active: response.data.active
         };
+        debugger
       },
       error: (error: any) => {
         console.error('Error fetching detail: ', error);

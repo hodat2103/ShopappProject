@@ -5,11 +5,13 @@
         <div class="row mb-3">
           <div class="col-md-8">
             <input type="text" 
-              class="form-control search-input" placeholder="Tìm đơn hàng" 
+              class="form-control search-input" placeholder="Search" 
               [(ngModel)]="keyword">
           </div>
           <div class="col-md-4">
             <button class="btn btn-primary" (click)="searchOrders()">Search</button>
+            <button class="btn btn-info" style="margin-left: 50px;" (click)="export('orders')">Export Excel</button>
+
           </div>
         </div>
       </div>
@@ -27,6 +29,7 @@
               <th>Order Date</th>
               <th>Status</th>
               <th>Total Money</th>
+              <th>PayStaus</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -42,6 +45,7 @@
               <td>{{ order.order_date | date }}</td>
               <td>{{ order.status }}</td>
               <td>{{ order.total_money }}</td>
+              <td>{{ order.active ? 'Đã thanh toán' : 'Chưa thanh toán' }}</td>
               <td>
                 <div style="display: flex; gap: 10px;">
                   <button 
