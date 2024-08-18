@@ -23,6 +23,20 @@ spring:
     basename: i18n/messages
     encoding: UTF-8
     default-locale: en
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: hobadat2003@gmail.com
+    password: ryakwkufbaewciqg
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+  security:
+    debug: true
 api:
   prefix: api/v1
 jwt:
@@ -32,3 +46,7 @@ jwt:
 
 logging.level.org.springframework.security: DEBUG
 logging.level.com.project.shopapp.filters.JwtTokenFilter: DEBUG
+logging.level.org.springframework.mail: DEBUG
+
+
+

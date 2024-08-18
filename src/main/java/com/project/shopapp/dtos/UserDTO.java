@@ -21,6 +21,8 @@ public class UserDTO {
     @JsonProperty("phone_number")
     private String phoneNumber;
 
+    private String email;
+
     private String address;
 
     @NotBlank(message = "Password cannot be blank")

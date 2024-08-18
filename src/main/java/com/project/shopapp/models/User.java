@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity implements UserDetails {
+public class User extends BaseEntity implements UserDetails, ExcelExportable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -30,6 +30,9 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "phone_number", length = 10, nullable = false)
     private String phoneNumber;
 
+    @Column(name = "email", length = 255, nullable = true)
+    private String email;
+
     @Column(name = "address", length = 200)
     private String address;
 
@@ -37,7 +40,7 @@ public class User extends BaseEntity implements UserDetails {
     private String password;
 
     @Column(name = "is_active")
-    private boolean isActive;
+    private boolean active;
 
     @Column(name = "date_of_birth")
     private Date dateOfBirth;
@@ -84,5 +87,16 @@ public class User extends BaseEntity implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+    @Override
+    public Object[] toExcelRow() {
+        return new Object[]{id, fullName,phoneNumber, email,address,active,dateOfBirth,role.getName()};
+    }
+
+    @Override
+    public String[] getColumnHeaders() {
+        return new String[]{"ID","Tên người","SĐT","Email","Địa chỉ","Kích hoạt", "Ngày sinh","Quyền"};
+
+
     }
 }

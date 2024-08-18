@@ -1,5 +1,6 @@
 package com.project.shopapp.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -17,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Order {
+public class Order implements ExcelExportable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -78,4 +79,28 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<OrderDetail> orderDetails;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "coupon_id", nullable = true)
+    @JsonBackReference
+    private Coupon coupon = null;
+
+    public Object[] toExcelRow() {
+        String paymentStatus = "";
+
+        if(paymentMethod == "vnpay"){
+            paymentStatus = "Đã thanh toán";
+        }else if(paymentMethod == "cod"){
+            paymentStatus = "Chưa thanh toán";
+        }
+
+        return new Object[]{id,user.getId(), fullName, email,phoneNumber,address,note,orderDate,status,totalMoney,paymentStatus};
+    }
+
+    @Override
+    public String[] getColumnHeaders() {
+        return new String[]{"ID","User ID","Full Name","Email","Phone Number","Address","Note", "Order Date","Status","Total Money","Payment Status"};
+
+
+    }
 }

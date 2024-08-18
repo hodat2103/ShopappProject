@@ -45,6 +45,9 @@ public class WebSecurityConfig {
                                         String.format("%s/users/register", apiPrefix),
                                         String.format("%s/users/login", apiPrefix)
                                 ).permitAll()
+                                .requestMatchers(
+                                        HttpMethod.PUT, String.format("%s/users/reset-password/**", apiPrefix)
+                                ).permitAll()
 
                                 .requestMatchers(
                                         HttpMethod.GET, String.format("%s/roles**", apiPrefix)
@@ -93,7 +96,7 @@ public class WebSecurityConfig {
                                 ).permitAll()
                                 .requestMatchers(
                                         HttpMethod.PUT, String.format("%s/orders/**", apiPrefix)
-                                ).hasRole(Role.ADMIN)
+                                ).permitAll()
                                 .requestMatchers(
                                         HttpMethod.DELETE, String.format("%s/orders/**", apiPrefix)
                                 ).hasRole(Role.ADMIN)
@@ -109,6 +112,15 @@ public class WebSecurityConfig {
                                 ).hasRole(Role.ADMIN)
                                 .requestMatchers(
                                         HttpMethod.DELETE, String.format("%s/order_details/**", apiPrefix)
+                                ).hasRole(Role.ADMIN)
+                                .requestMatchers(
+                                        HttpMethod.GET, String.format("%s/coupons/calculate", apiPrefix)
+                                ).permitAll()
+                                .requestMatchers(
+                                        HttpMethod.GET, String.format("%s/payments/**", apiPrefix)
+                                ).permitAll()
+                                .requestMatchers(
+                                        HttpMethod.GET, String.format("%s/excel/export/**", apiPrefix)
                                 ).hasRole(Role.ADMIN)
                                 .anyRequest().authenticated()
                 )

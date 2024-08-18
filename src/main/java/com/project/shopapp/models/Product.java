@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Product extends BaseEntity{
+public class Product extends BaseEntity implements ExcelExportable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,6 +42,13 @@ public class Product extends BaseEntity{
     @JsonManagedReference
     private List<ProductImage> productImages;
 
+    public Object[] toExcelRow() {
+        return new Object[]{id, name,price,thumbnail,description,category.getName()};
+    }
 
+    @Override
+    public String[] getColumnHeaders() {
+        return new String[]{"ID","Product Name","Price","Thumbnail","Description","Category"};
+    }
 
 }

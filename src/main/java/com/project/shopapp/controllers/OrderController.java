@@ -4,21 +4,19 @@ import com.project.shopapp.components.LocalizationUtils;
 import com.project.shopapp.dtos.OrderDTO;
 import com.project.shopapp.exceptions.DataNotFoundException;
 import com.project.shopapp.models.Order;
-import com.project.shopapp.responses.OrderListResponse;
-import com.project.shopapp.responses.OrderResponse;
-import com.project.shopapp.responses.ProductListResponse;
-import com.project.shopapp.responses.ProductResponse;
-import com.project.shopapp.responses.messages.OrderMessageResponse;
-import com.project.shopapp.services.impl.OrderServiceImpl;
+import com.project.shopapp.responses.order.OrderListResponse;
+import com.project.shopapp.responses.order.OrderResponse;
+import com.project.shopapp.responses.ResponseObject;
+import com.project.shopapp.responses.order.OrderMessageResponse;
+import com.project.shopapp.services.order.OrderServiceImpl;
 import com.project.shopapp.utils.MessageKeys;
 import jakarta.validation.Valid;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
@@ -36,40 +34,62 @@ public class OrderController{
     @PostMapping("")
     public ResponseEntity<?> create(
             @Valid @RequestBody OrderDTO orderDTO,
-            BindingResult result) {
-        try {
-            if(result.hasErrors()){
-                List<String> errorMessages = result.getFieldErrors()
-                        .stream()
-                        .map(FieldError:: getDefaultMessage)
-                        .toList();
-                return ResponseEntity.badRequest().body(errorMessages);
-            }
-            Order order = orderService.create(orderDTO);
-            return ResponseEntity.ok(order);
-
-        } catch (Exception ex) {
-
-            return ResponseEntity.badRequest().body(ex.getMessage());
+            BindingResult result) throws Exception {
+        if(result.hasErrors()) {
+            List<String> errorMessages = result.getFieldErrors()
+                    .stream()
+                    .map(FieldError::getDefaultMessage)
+                    .toList();
+            return ResponseEntity.badRequest().body(
+                    ResponseObject.builder()
+                            .message(String.join(";", errorMessages))
+                            .status(HttpStatus.BAD_REQUEST)
+                            .build());
         }
+//        User loginUser = securityUtils.getLoggedInUser();
+//        if(orderDTO.getUserId() == null) {
+//            orderDTO.setUserId(loginUser.getId());
+//        }
+
+
+        Order orderResponse = orderService.create(orderDTO);
+        return ResponseEntity.ok(ResponseObject.builder()
+                .message("Insert order successfully")
+                .data(orderResponse)
+                .status(HttpStatus.OK)
+                .build());
     }
-    @GetMapping("/user/{user_id}")
-    public ResponseEntity<?> getOrders(@Valid @PathVariable("user_id") Long userId){
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ResponseObject> getOrders(@Valid @PathVariable("userId") Long userId){
         try {
-            List<Order> orders = orderService.getAllOrders(userId);
-            return ResponseEntity.ok(orders);
+            List<OrderResponse> orders = orderService.findByUserId(userId);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(orders)
+                    .message("")
+                    .build());
         }catch(Exception ex){
-            return ResponseEntity.badRequest().body(ex.getMessage());
+            return ResponseEntity.badRequest().body(
+                    ResponseObject.builder()
+                            .message(String.join(";", ex.getMessage()))
+                            .status(HttpStatus.BAD_REQUEST)
+                            .build());
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> getOrder(@Valid @PathVariable("id") Long orderId){
+    public ResponseEntity<ResponseObject> getOrder(@Valid @PathVariable("id") Long orderId){
         try {
             Order existsOrder = orderService.getOrderById(orderId);
             OrderResponse orderResponse = OrderResponse.fromOrder(existsOrder);
-            return ResponseEntity.ok(orderResponse);
+            return ResponseEntity.ok(ResponseObject.builder()
+                    .data(orderResponse)
+                    .message("")
+                    .build());
         }catch(Exception ex){
-            return ResponseEntity.badRequest().body(ex.getMessage());
+            return ResponseEntity.badRequest().body(
+                    ResponseObject.builder()
+                            .message(String.join(";", ex.getMessage()))
+                            .status(HttpStatus.BAD_REQUEST)
+                            .build());
         }
     }
     @PutMapping("/{id}")
@@ -100,7 +120,7 @@ public class OrderController{
 
     @GetMapping("/get-orders-by-keyword")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<OrderListResponse> getOrdersByKeyword(
+    public ResponseEntity<ResponseObject> getOrdersByKeyword(
             @RequestParam(required = false) String keyword,
             @RequestParam(defaultValue = "0",name = "page") int page,
             @RequestParam(defaultValue = "10",name = "limit") int limit){
@@ -115,10 +135,14 @@ public class OrderController{
         // get sum number of page
         int totalPages = orderPage.getTotalPages();
         List<OrderResponse> orderResponses = orderPage.getContent();
-        return ResponseEntity.ok(OrderListResponse
+        return ResponseEntity.ok(ResponseObject
                 .builder()
-                .orders(orderResponses)
-                .totalPages(totalPages)
+                .status(HttpStatus.OK)
+                .data(OrderListResponse.builder()
+                        .orders(orderResponses)
+                        .totalPages(totalPages)
+                        .build())
+                .message("Get order OK")
                 .build());
     }
 }
